@@ -22,6 +22,16 @@ const userSchema: Schema = new Schema<IUser>({
     },
     refreshToken: {
         type: String,
+        trim: true,
+    },
+    isVerified:{
+        type: Boolean,
+        default: false,
+    },
+    verificationToken:{
+        type: String,
+        trim: true,
+        default: '',
     },
 }, { timestamps: true });
 userSchema.pre<IUser>('save', async function (next) {
