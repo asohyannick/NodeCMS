@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { HierachyLevelStatus } from '../service/interfac/role/role.interfac';
 const userRegistrationSchema = Yup.object().shape({
     firstName: Yup.string().required("firstName must be provided").min(3, "firstName must be at least 3 characters minimum").trim().lowercase(),
     lasttName: Yup.string().required("lastName must be provided").min(3, "lastName must be at least 3 characters minimum").trim().lowercase(),
@@ -81,10 +82,44 @@ const updateProfileSchema = Yup.object().shape({
         .required('Date is required')
         .nullable(),
 });
+const roleSchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Role name is required')
+        .min(2, 'Role name must be at least 2 characters long'),
+    description: Yup.string()
+        .required('Description is required')
+        .min(10, 'Description must be at least 10 characters long'),
+    permissions: Yup.array()
+        .of(Yup.string().required('Permission must be a string'))
+        .required('Permissions are required'),
+    hierarchyLevel: Yup.mixed<HierachyLevelStatus>()
+        .oneOf(Object.values(HierachyLevelStatus), 'Invalid hierarchy level')
+        .required('Hierarchy level is required'),
+    isActive: Yup.boolean()
+        .required('Status is required'),
+});
+const updateRoleSchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Role name is required')
+        .min(2, 'Role name must be at least 2 characters long'),
+    description: Yup.string()
+        .required('Description is required')
+        .min(10, 'Description must be at least 10 characters long'),
+    permissions: Yup.array()
+        .of(Yup.string().required('Permission must be a string'))
+        .required('Permissions are required'),
+    hierarchyLevel: Yup.mixed<HierachyLevelStatus>()
+        .oneOf(Object.values(HierachyLevelStatus), 'Invalid hierarchy level')
+        .required('Hierarchy level is required'),
+    isActive: Yup.boolean()
+        .required('Status is required'),
+});
 export {
     userRegistrationSchema,
     userLoginSchema,
     updateUserRegistrationSchema,
     profileSchema,
-    updateProfileSchema
+    updateProfileSchema,
+    roleSchema,
+    updateRoleSchema
 }
