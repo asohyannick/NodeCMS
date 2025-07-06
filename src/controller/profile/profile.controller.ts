@@ -4,7 +4,9 @@ import createProfile from '../../service/impl/profile/createProfile/createProfil
 import globalValidator from '../../middleware/globalValidator/globalValidator';
 import { profileSchema } from '../../utils/validator';
 import showProfiles from '../../service/impl/profile/showProfiles/showProfiles.impl';
+import showProfile from '../../service/impl/profile/showProfile/showProfile.impl';
 const router = express.Router();
 router.post('/create-profile', authToken, globalValidator(profileSchema), createProfile);
 router.get('/show-profiles', authToken, showProfiles);
+router.get('/show-profile/:id', authToken, showProfile);
 export default router;
