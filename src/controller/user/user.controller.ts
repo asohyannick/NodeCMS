@@ -13,6 +13,7 @@ import refreshAccessToken from '../../service/impl/user/refreshAccessToken/refre
 import verifyUserEmail from '../../service/impl/user/verifyEmail/verifyEmail.impl';
 import sendEmailMessage from '../../service/impl/user/emailProvider/emailServiceHandler/emailServiceHandler';
 import changePassword from '../../service/impl/user/changePassword/changePassword.impl';
+import resetPassword from '../../service/impl/user/resetPassword/resetPassword.impl';
 const router = express.Router();
 router.post('/create-account', authToken, globalValidator(userRegistrationSchema), register);
 router.post('/login', authToken, globalValidator(userLoginSchema), login);
@@ -20,6 +21,7 @@ router.post('/logout', authToken, logout);
 router.post('/send-email', authToken, sendEmailMessage);
 router.post('/refresh-access-token', authToken, refreshAccessToken);
 router.post('/verify-user-email', authToken, verifyUserEmail);
+router.post('/reset-password', authToken, resetPassword);
 router.post('/change-password', authToken, changePassword);
 router.get('/show-users', authToken, showUsers);
 router.get('/show-user/:id', authToken, showUser);

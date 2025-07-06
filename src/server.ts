@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import connectToMongoDB from './config/databaseConfig/databaseConfig';
 import userRoute from './controller/user/user.controller';
+import profileRoute from './controller/profile/profile.controller';
 import notFoundRoute from './middleware/notFound/notFound';
 import backendServerErrorRoute from './middleware/serverError/serverError';
 const app: Application = express();
@@ -34,6 +35,8 @@ app.use(helmet());
 app.use(compression());
 app.use(limiter);
 app.use(`/api/${API_VERSION}/user`, userRoute);
+app.use(`/api/${API_VERSION}/profile`, profileRoute);
+
 app.use(notFoundRoute);
 app.use(backendServerErrorRoute);
 async function serve() {
