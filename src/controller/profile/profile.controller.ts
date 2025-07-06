@@ -3,6 +3,8 @@ import authToken from '../../middleware/auth/auth.middleware';
 import createProfile from '../../service/impl/profile/createProfile/createProfile.impl';
 import globalValidator from '../../middleware/globalValidator/globalValidator';
 import { profileSchema } from '../../utils/validator';
+import showProfiles from '../../service/impl/profile/showProfiles/showProfiles.impl';
 const router = express.Router();
 router.post('/create-profile', authToken, globalValidator(profileSchema), createProfile);
+router.get('/show-profiles', authToken, showProfiles);
 export default router;
