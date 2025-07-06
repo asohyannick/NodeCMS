@@ -1,15 +1,14 @@
 import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.GMAIL_USER as string,
-        pass: process.env.GMAIL_PASS as string,
-    },
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER as string,
+    pass: process.env.GMAIL_PASS as string,
+  },
 });
 
-const sendEmail = async (to: string) => {
-    const subject = 'Maximize Your online content creation with our NodeCMS application';
-    const html = `
+const sendEmail = async (to: string, subject: string, html: string) => {
+  `
     <html>
       <head>
         <style>
@@ -67,18 +66,18 @@ const sendEmail = async (to: string) => {
     </body> 
   `;
 
-    const mailOptions = {
-        from: process.env.GMAIL_USER as string,
-        to,
-        subject,
-        html,
-    };
+  const mailOptions = {
+    from: process.env.GMAIL_USER as string,
+    to,
+    subject,
+    html,
+  };
 
-    try {
-        await transporter.sendMail(mailOptions);
-        console.log('Email sent successfully');
-    } catch (error) {
-        console.error('Error sending email:', error);
-    }
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
 };
 export default sendEmail;
