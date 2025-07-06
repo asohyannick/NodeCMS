@@ -1,0 +1,10 @@
+import express from 'express';
+import authToken from '../../middleware/auth/auth.middleware';
+import register from '../../service/impl/user/register/register.impl';
+import globalValidator from '../../middleware/globalValidator/globalValidator';
+import { userLoginSchema, userRegistrationSchema } from '../../utils/validator';
+import login from '../../service/impl/user/login/login.impl';
+const router = express.Router();
+router.post('/create-account', authToken, globalValidator(userRegistrationSchema), register);
+router.post('/login', authToken, globalValidator(userLoginSchema), login);
+export default router;

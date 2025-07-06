@@ -6,7 +6,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import connectToMongoDB from './config/databaseConfig/databaseConfig';
-import userRoute from './controller/user/user.profile';
+import userRoute from './controller/user/user.controller';
 import notFoundRoute from './middleware/notFound/notFound';
 import backendServerErrorRoute from './middleware/serverError/serverError';
 const app: Application = express();
