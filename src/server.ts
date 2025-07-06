@@ -6,6 +6,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import connectToMongoDB from './config/databaseConfig/databaseConfig';
+import notFoundRoute from './middleware/notFound/notFound';
+import backendServerErrorRoute from './middleware/serverError/serverError';
 const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +32,8 @@ app.use(cors({
 app.use(helmet());
 app.use(compression());
 app.use(limiter);
+app.use(notFoundRoute);
+app.use(backendServerErrorRoute);
 async function serve() {
     try {
         await connectToMongoDB(),
