@@ -9,6 +9,7 @@ import connectToMongoDB from './config/databaseConfig/databaseConfig';
 import userRoute from './controller/user/user.controller';
 import profileRoute from './controller/profile/profile.controller';
 import roleRoute from './controller/role/role.controller';
+import contentRoute from './controller/content/content.controller';
 import notFoundRoute from './middleware/notFound/notFound';
 import backendServerErrorRoute from './middleware/serverError/serverError';
 const app: Application = express();
@@ -16,17 +17,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const APP_NAME: string = process.env.APP_NAME || 'NodeCMS';
 const APP_HOST: string = process.env.APP_HOST || 'localhost';
-const API_VERSION: string | number = process.env.API_VERSION  || 'v1';
+const API_VERSION: string | number = process.env.API_VERSION || 'v1';
 const APP_PORT: string | number = parseInt(process.env.APP_PORT || '8080', 10);
 const APP_OWNER: string | number = process.env.APP_OWNER || 'codingLamb';
 if (process.env.NODE_ENV as string === 'development') {
     app.use(morgan('dev'));
 }
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, 
-	limit: 100,
-	standardHeaders: 'draft-8',
-	legacyHeaders: false,
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+    standardHeaders: 'draft-8',
+    legacyHeaders: false,
 });
 app.use(cors({
     origin: process.env.CLIENT_SIDE as string || '*',
@@ -38,6 +39,8 @@ app.use(limiter);
 app.use(`/api/${API_VERSION}/user`, userRoute);
 app.use(`/api/${API_VERSION}/profile`, profileRoute);
 app.use(`/api/${API_VERSION}/role`, roleRoute);
+app.use(`/api/${API_VERSION}/content`, contentRoute);
+
 app.use(notFoundRoute);
 app.use(backendServerErrorRoute);
 async function serve() {
@@ -47,7 +50,7 @@ async function serve() {
                 console.log(`Server is called ${APP_NAME} running on ${APP_HOST}//: on port ${APP_PORT} on /api/${API_VERSION} owned by ${APP_OWNER}...`)
             });
     } catch (error) {
-     console.log('connection to DB failed!', error);
+        console.log('connection to DB failed!', error);
     }
 }
 serve();

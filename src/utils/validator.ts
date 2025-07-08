@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 import { HierachyLevelStatus } from '../service/interfac/role/role.interfac';
+import { ContentStatus } from '../service/interfac/content/content.interfac';
+import { Types } from 'mongoose';
 const userRegistrationSchema = Yup.object().shape({
     firstName: Yup.string().required("firstName must be provided").min(3, "firstName must be at least 3 characters minimum").trim().lowercase(),
     lasttName: Yup.string().required("lastName must be provided").min(3, "lastName must be at least 3 characters minimum").trim().lowercase(),
@@ -114,6 +116,80 @@ const updateRoleSchema = Yup.object().shape({
     isActive: Yup.boolean()
         .required('Status is required'),
 });
+const contentSchema = Yup.object().shape({
+    title: Yup.string()
+        .required('Title is required')
+        .min(3, 'Title must be at least 3 characters long'),
+    body: Yup.string()
+        .required('Body is required')
+        .min(10, 'Body must be at least 10 characters long'),
+    author: Yup.mixed<Types.ObjectId>()
+        .required('Author is required')
+        .test('is-objectid', 'Author must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    category: Yup.mixed<Types.ObjectId>()
+        .required('Category is required')
+        .test('is-objectid', 'Category must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    tags: Yup.array()
+        .of(Yup.string().required('Tag must be a string'))
+        .required('Tags are required'),
+    status: Yup.mixed<ContentStatus>()
+        .oneOf(Object.values(ContentStatus), 'Invalid content status')
+        .required('Status is required'),
+    publishedAt: Yup.date()
+        .nullable(), // Allows publishedAt to be null
+    metadata: Yup.object().shape({
+        views: Yup.number()
+            .required('Views count is required')
+            .min(0, 'Views count cannot be negative'),
+        likes: Yup.number()
+            .required('Likes count is required')
+            .min(0, 'Likes count cannot be negative'),
+        comments: Yup.number()
+            .required('Comments count is required')
+            .min(0, 'Comments count cannot be negative'),
+    }),
+});
+const updateContentSchema = Yup.object().shape({
+    title: Yup.string()
+        .required('Title is required')
+        .min(3, 'Title must be at least 3 characters long'),
+    body: Yup.string()
+        .required('Body is required')
+        .min(10, 'Body must be at least 10 characters long'),
+    author: Yup.mixed<Types.ObjectId>()
+        .required('Author is required')
+        .test('is-objectid', 'Author must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    category: Yup.mixed<Types.ObjectId>()
+        .required('Category is required')
+        .test('is-objectid', 'Category must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    tags: Yup.array()
+        .of(Yup.string().required('Tag must be a string'))
+        .required('Tags are required'),
+    status: Yup.mixed<ContentStatus>()
+        .oneOf(Object.values(ContentStatus), 'Invalid content status')
+        .required('Status is required'),
+    publishedAt: Yup.date()
+        .nullable(), // Allows publishedAt to be null
+    metadata: Yup.object().shape({
+        views: Yup.number()
+            .required('Views count is required')
+            .min(0, 'Views count cannot be negative'),
+        likes: Yup.number()
+            .required('Likes count is required')
+            .min(0, 'Likes count cannot be negative'),
+        comments: Yup.number()
+            .required('Comments count is required')
+            .min(0, 'Comments count cannot be negative'),
+    }),
+});
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -121,5 +197,7 @@ export {
     profileSchema,
     updateProfileSchema,
     roleSchema,
-    updateRoleSchema
+    updateRoleSchema,
+    contentSchema,
+    updateContentSchema
 }
