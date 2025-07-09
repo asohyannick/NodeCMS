@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import Media from "../../../../model/media/media.model";
 import { MediaStatus } from "../../../interfac/media/media.interfac";
-const createMedia = async (req: Request, res: Response): Promise<Response> => {
+const createMediaContent = async (req: Request, res: Response): Promise<Response> => {
     const {
         title,
         url,
@@ -32,4 +32,4 @@ const createMedia = async (req: Request, res: Response): Promise<Response> => {
     }
 }
 
-export default createMedia;
+export default createMediaContent;
