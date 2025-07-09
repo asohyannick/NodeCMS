@@ -58,12 +58,25 @@ app.use(notFoundRoute);
 app.use(backendServerErrorRoute);
 async function serve() {
     try {
-        await connectToMongoDB(),
-            app.listen(APP_PORT, () => {
-                console.log(`Server is called ${APP_NAME} running on ${APP_HOST}//: on port ${APP_PORT} on /api/${API_VERSION} owned by ${APP_OWNER}...`)
+        await connectToMongoDB();
+        app.listen(APP_PORT, () => {
+            console.log(`Server ${APP_NAME} running on ${APP_HOST} on port ${APP_PORT} at /api/${API_VERSION} owned by ${APP_OWNER}...`);
+        });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error('Failed to connect to the database:', {
+                message: error.message,
+                stack: error.stack,
+                timestamp: new Date().toISOString(),
             });
-    } catch (error) {
-        console.log('connection to DB failed!', error);
+        } else {
+            console.error('Failed to connect to the database: An unknown error occurred', {
+                error,
+                timestamp: new Date().toISOString(),
+            });
+        }
+        process.exit(1); // Exit the process with a failure code
     }
 }
+
 serve();
