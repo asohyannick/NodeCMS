@@ -190,6 +190,52 @@ const updateContentSchema = Yup.object().shape({
             .min(0, 'Comments count cannot be negative'),
     }),
 });
+const categorySchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Category name is required')
+        .min(2, 'Category name must be at least 2 characters long'),
+    description: Yup.string()
+        .required('Description is required')
+        .min(10, 'Description must be at least 10 characters long'),
+    slug: Yup.string()
+        .required('Slug is required')
+        .matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be URL-friendly (lowercase letters, numbers, and hyphens)'),
+    isActive: Yup.boolean()
+        .required('Status is required'),
+    metadata: Yup.object().shape({
+        contentCount: Yup.number()
+            .required('Content count is required')
+            .min(0, 'Content count cannot be negative'),
+        createdBy: Yup.mixed<Types.ObjectId>()
+            .required('Creator ID is required')
+            .test('is-objectid', 'Created by must be a valid ObjectId', value => {
+                return Types.ObjectId.isValid(value);
+            }),
+    }),
+});
+const updateCategorySchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Category name is required')
+        .min(2, 'Category name must be at least 2 characters long'),
+    description: Yup.string()
+        .required('Description is required')
+        .min(10, 'Description must be at least 10 characters long'),
+    slug: Yup.string()
+        .required('Slug is required')
+        .matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be URL-friendly (lowercase letters, numbers, and hyphens)'),
+    isActive: Yup.boolean()
+        .required('Status is required'),
+    metadata: Yup.object().shape({
+        contentCount: Yup.number()
+            .required('Content count is required')
+            .min(0, 'Content count cannot be negative'),
+        createdBy: Yup.mixed<Types.ObjectId>()
+            .required('Creator ID is required')
+            .test('is-objectid', 'Created by must be a valid ObjectId', value => {
+                return Types.ObjectId.isValid(value);
+            }),
+    }),
+});
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -199,5 +245,7 @@ export {
     roleSchema,
     updateRoleSchema,
     contentSchema,
-    updateContentSchema
+    updateContentSchema,
+    categorySchema,
+    updateCategorySchema
 }
