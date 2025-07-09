@@ -12,6 +12,7 @@ import roleRoute from './controller/role/role.controller';
 import contentRoute from './controller/content/content.controller';
 import categoryRoute from './controller/category/category.controller';
 import tagRoute from './controller/tag/tag.controller';
+import mediaRoute from './controller/media/media.controller';
 import notFoundRoute from './middleware/notFound/notFound';
 import backendServerErrorRoute from './middleware/serverError/serverError';
 const app: Application = express();
@@ -44,6 +45,8 @@ app.use(`/api/${API_VERSION}/role`, roleRoute);
 app.use(`/api/${API_VERSION}/content`, contentRoute);
 app.use(`/api/${API_VERSION}/category`, categoryRoute);
 app.use(`/api/${API_VERSION}/tag`, tagRoute);
+app.use(`/api/${API_VERSION}/media`, mediaRoute);
+
 app.use(notFoundRoute);
 app.use(backendServerErrorRoute);
 async function serve() {

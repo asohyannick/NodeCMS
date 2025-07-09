@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { HierachyLevelStatus } from '../service/interfac/role/role.interfac';
 import { ContentStatus } from '../service/interfac/content/content.interfac';
 import { Types } from 'mongoose';
+import { MediaStatus } from '../service/interfac/media/media.interfac';
 const userRegistrationSchema = Yup.object().shape({
     firstName: Yup.string().required("firstName must be provided").min(3, "firstName must be at least 3 characters minimum").trim().lowercase(),
     lasttName: Yup.string().required("lastName must be provided").min(3, "lastName must be at least 3 characters minimum").trim().lowercase(),
@@ -272,6 +273,64 @@ const updateTagSchema = Yup.object().shape({
             return Types.ObjectId.isValid(value);
         }),
 });
+const mediaSchema = Yup.object().shape({
+    uploadedBy: Yup.mixed<Types.ObjectId>()
+        .required('Uploader ID is required')
+        .test('is-objectid', 'Uploader must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    relatedContent: Yup.array()
+        .of(Yup.mixed<Types.ObjectId>()
+            .test('is-objectid', 'Related content must be valid ObjectId', value => {
+                // Check if value is defined and valid
+                return value !== undefined && Types.ObjectId.isValid(value);
+            }))
+        .required('Related content is required')
+        .min(1, 'At least one related content is required'), // Optional: Ensure at least one related content
+    title: Yup.string()
+        .required('Title is required')
+        .min(2, 'Title must be at least 2 characters long'),
+    url: Yup.string()
+        .required('URL is required')
+        .url('Must be a valid URL'),
+    mediaType: Yup.mixed<MediaStatus>()
+        .oneOf(Object.values(MediaStatus), 'Media type must be a valid status')
+        .required('Media type is required'),
+    description: Yup.string()
+        .optional(), // Optional description
+    size: Yup.number()
+        .required('Size is required')
+        .min(1, 'Size must be greater than 0'), // Size must be positive
+});
+const updateMediaSchema = Yup.object().shape({
+    uploadedBy: Yup.mixed<Types.ObjectId>()
+        .required('Uploader ID is required')
+        .test('is-objectid', 'Uploader must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    relatedContent: Yup.array()
+        .of(Yup.mixed<Types.ObjectId>()
+            .test('is-objectid', 'Related content must be valid ObjectId', value => {
+                // Check if value is defined and valid
+                return value !== undefined && Types.ObjectId.isValid(value);
+            }))
+        .required('Related content is required')
+        .min(1, 'At least one related content is required'), // Optional: Ensure at least one related content
+    title: Yup.string()
+        .required('Title is required')
+        .min(2, 'Title must be at least 2 characters long'),
+    url: Yup.string()
+        .required('URL is required')
+        .url('Must be a valid URL'),
+    mediaType: Yup.mixed<MediaStatus>()
+        .oneOf(Object.values(MediaStatus), 'Media type must be a valid status')
+        .required('Media type is required'),
+    description: Yup.string()
+        .optional(), // Optional description
+    size: Yup.number()
+        .required('Size is required')
+        .min(1, 'Size must be greater than 0'), // Size must be positive
+});
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -286,4 +345,6 @@ export {
     updateCategorySchema,
     tagSchema,
     updateTagSchema,
+    mediaSchema,
+    updateMediaSchema
 }
