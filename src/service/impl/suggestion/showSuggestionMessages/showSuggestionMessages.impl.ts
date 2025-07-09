@@ -1,18 +1,13 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import Suggestion from "../../../../model/suggestion/suggestion.model";
-const sendSuggestionMessage = async (req: Request, res: Response): Promise<Response> => {
-    const { suggestion } = req.body;
+const showSuggestionMessages = async (_req: Request, res: Response): Promise<Response> => {
     try {
-        const newSuggestionMessage = new Suggestion({
-            suggestion,
-            isImplemented: true,
-        });
-        await newSuggestionMessage.save();
-        return res.status(StatusCodes.CREATED).json({
+        const suggestions = await Suggestion.find(); 
+        return res.status(StatusCodes.OK).json({
             success: true,
-            message: "A new suggestion content message has been added successfully!",
-            newSuggestionMessage,
+            message: "Suggestion content messages have been fetched successfully!",
+            suggestions
         });
     } catch (error) {
         console.error("Error occured!", error);
@@ -24,4 +19,4 @@ const sendSuggestionMessage = async (req: Request, res: Response): Promise<Respo
     }
 }
 
-export default sendSuggestionMessage;
+export default showSuggestionMessages;

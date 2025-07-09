@@ -3,7 +3,8 @@ import authToken from '../../middleware/auth/auth.middleware';
 import globalValidator from '../../middleware/globalValidator/globalValidator';
 import { suggestionSchema } from '../../utils/validator';
 import sendSuggestionMessage from '../../service/impl/suggestion/sendSuggestionMessage/sendSuggestionMessage.impl';
+import showSuggestionMessages from '../../service/impl/suggestion/showSuggestionMessages/showSuggestionMessages.impl';
 const router = express.Router();
 router.post('/send-suggestion-message', authToken, globalValidator(suggestionSchema), sendSuggestionMessage);
-
+router.get('/show-suggestion-messages', authToken, showSuggestionMessages);
 export default router;
