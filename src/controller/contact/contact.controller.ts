@@ -4,7 +4,9 @@ import sendContactMessage from '../../service/impl/contact/sendContactMessage/se
 import globalValidator from '../../middleware/globalValidator/globalValidator';
 import { contactSchema } from '../../utils/validator';
 import showContactMessages from '../../service/impl/contact/showContactMessages/showContactMessages.impl';
+import showContactMessage from '../../service/impl/contact/showContactMessage/showContactMessage.impl';
 const router = express.Router();
 router.post('/send-contact-message', authToken, globalValidator(contactSchema), sendContactMessage);
 router.get('/show-contact-messsages', authToken, showContactMessages);
+router.get('/show-contact-message/:id', authToken, showContactMessage);
 export default router;
