@@ -424,6 +424,39 @@ const updateFaqSchema = Yup.object().shape({
     isActive: Yup.boolean()
         .required('Active status is required'),
 });
+const contactSchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Name is required')
+        .min(1, 'Name must be at least 1 character long'), // Ensure at least 1 character
+    email: Yup.string()
+        .required('Email is required')
+        .email('Email must be a valid email format'), // Validate email format
+    subject: Yup.string()
+        .required('Subject is required')
+        .min(1, 'Subject must be at least 1 character long'), // Ensure at least 1 character
+    message: Yup.string()
+        .required('Message is required')
+        .min(1, 'Message must be at least 1 character long'), // Ensure at least 1 character
+    isResponded: Yup.boolean()
+        .required('Response status is required'), // Required boolean field
+});
+const updateContactSchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Name is required')
+        .min(1, 'Name must be at least 1 character long'), // Ensure at least 1 character
+    email: Yup.string()
+        .required('Email is required')
+        .email('Email must be a valid email format'), // Validate email format
+    subject: Yup.string()
+        .required('Subject is required')
+        .min(1, 'Subject must be at least 1 character long'), // Ensure at least 1 character
+    message: Yup.string()
+        .required('Message is required')
+        .min(1, 'Message must be at least 1 character long'), // Ensure at least 1 character
+    isResponded: Yup.boolean()
+        .required('Response status is required'), // Required boolean field
+});
+
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -443,5 +476,7 @@ export {
     commentSchema,
     updateCommentSchema,
     faqSchema,
-    updateFaqSchema
+    updateFaqSchema,
+    contactSchema,
+    updateContactSchema,
 }
