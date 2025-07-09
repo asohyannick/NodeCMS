@@ -1,12 +1,14 @@
 import express from 'express';
 import authToken from '../../middleware/auth/auth.middleware';
 import globalValidator from '../../middleware/globalValidator/globalValidator';
-import { contentSchema } from '../../utils/validator';
+import { contentSchema, updateContentSchema } from '../../utils/validator';
 import createContent from '../../service/impl/content/createContent/createContent.impl';
 import showContents from '../../service/impl/content/showContents/showContents.impl';
 import showContent from '../../service/impl/content/showContent/showContent.impl';
+import updateContent from '../../service/impl/content/updateContent/updateContent.impl';
 const router = express.Router();
 router.post('/create-content', authToken, globalValidator(contentSchema), createContent);
 router.get('/show-contents', authToken, showContents);
 router.get('/show-content/:id', authToken, showContent);
+router.put('/update-content/:id', authToken, globalValidator(updateContentSchema), updateContent);
 export default router;
