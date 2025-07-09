@@ -3,6 +3,8 @@ import authToken from '../../middleware/auth/auth.middleware';
 import createReview from '../../service/impl/review/createReview/createReview.impl';
 import globalValidator from '../../middleware/globalValidator/globalValidator';
 import { reviewSchema } from '../../utils/validator';
+import showReviews from '../../service/impl/review/showReviews/showReviews.impl';
 const router = express.Router();
 router.post('/create-review', authToken, globalValidator(reviewSchema),createReview);
+router.get('/show-reviews', authToken, showReviews);
 export default router;
