@@ -331,6 +331,76 @@ const updateMediaSchema = Yup.object().shape({
         .required('Size is required')
         .min(1, 'Size must be greater than 0'), // Size must be positive
 });
+const commentSchema = Yup.object().shape({
+    ContentId: Yup.mixed<Types.ObjectId>()
+        .required('Content ID is required')
+        .test('is-objectid', 'Content ID must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    author: Yup.mixed<Types.ObjectId>()
+        .required('Author ID is required')
+        .test('is-objectid', 'Author must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    CommentId: Yup.mixed<Types.ObjectId>()
+        .nullable() // Allow null for the parent comment reference
+        .test('is-objectid-or-null', 'Parent comment must be a valid ObjectId or null', value => {
+            return value === null || (typeof value === 'string' && Types.ObjectId.isValid(value));
+        }),
+    replies: Yup.array()
+        .of(Yup.mixed<Types.ObjectId>()
+            .test('is-objectid', 'Reply must be a valid ObjectId', value => {
+                return value !== undefined && Types.ObjectId.isValid(value);
+            }))
+        .optional(), // Replies are optional
+    body: Yup.string()
+        .required('Comment body is required')
+        .min(1, 'Comment body must be at least 1 character long'), // Ensure at least 1 character
+    likes: Yup.number()
+        .required('Likes count is required')
+        .min(0, 'Likes cannot be negative'), // Likes cannot be negative
+    unLikes: Yup.number()
+        .required('Unlikes count is required')
+        .min(0, 'Unlikes cannot be negative'), // Unlikes cannot be negative
+    isDeleted: Yup.boolean()
+        .required('Deletion status is required'),
+});
+
+const updateCommentSchema = Yup.object().shape({
+    ContentId: Yup.mixed<Types.ObjectId>()
+        .required('Content ID is required')
+        .test('is-objectid', 'Content ID must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    author: Yup.mixed<Types.ObjectId>()
+        .required('Author ID is required')
+        .test('is-objectid', 'Author must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+    CommentId: Yup.mixed<Types.ObjectId>()
+        .nullable() // Allow null for the parent comment reference
+        .test('is-objectid-or-null', 'Parent comment must be a valid ObjectId or null', value => {
+            return value === null || (typeof value === 'string' && Types.ObjectId.isValid(value));
+        }),
+    replies: Yup.array()
+        .of(Yup.mixed<Types.ObjectId>()
+            .test('is-objectid', 'Reply must be a valid ObjectId', value => {
+                return value !== undefined && Types.ObjectId.isValid(value);
+            }))
+        .optional(), // Replies are optional
+    body: Yup.string()
+        .required('Comment body is required')
+        .min(1, 'Comment body must be at least 1 character long'), // Ensure at least 1 character
+    likes: Yup.number()
+        .required('Likes count is required')
+        .min(0, 'Likes cannot be negative'), // Likes cannot be negative
+    unLikes: Yup.number()
+        .required('Unlikes count is required')
+        .min(0, 'Unlikes cannot be negative'), // Unlikes cannot be negative
+    isDeleted: Yup.boolean()
+        .required('Deletion status is required'),
+});
+
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -346,5 +416,7 @@ export {
     tagSchema,
     updateTagSchema,
     mediaSchema,
-    updateMediaSchema
+    updateMediaSchema,
+    commentSchema,
+    updateCommentSchema,
 }
