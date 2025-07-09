@@ -3,6 +3,8 @@ import authToken from '../../middleware/auth/auth.middleware';
 import globalValidator from '../../middleware/globalValidator/globalValidator';
 import { tagSchema } from '../../utils/validator';
 import createTag from '../../service/impl/tag/createTag/createTag.impl';
+import showTags from '../../service/impl/tag/showTags/showTags.impl';
 const router = express.Router();
 router.post('/create-tag', authToken, globalValidator(tagSchema), createTag);
+router.get('/show-tags', authToken, showTags);
 export default router;
