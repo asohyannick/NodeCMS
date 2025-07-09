@@ -1,12 +1,16 @@
 import express from 'express';
 import authToken from '../../middleware/auth/auth.middleware';
 import globalValidator from '../../middleware/globalValidator/globalValidator';
-import { tagSchema } from '../../utils/validator';
+import { tagSchema, updateTagSchema } from '../../utils/validator';
 import createTag from '../../service/impl/tag/createTag/createTag.impl';
 import showTags from '../../service/impl/tag/showTags/showTags.impl';
 import showTag from '../../service/impl/tag/showTag/showTag.impl';
+import updateTag from '../../service/impl/tag/updateTag/updateTag.impl';
+import deleteTag from '../../service/impl/tag/deleteTag/deleteTag.impl';
 const router = express.Router();
 router.post('/create-tag', authToken, globalValidator(tagSchema), createTag);
 router.get('/show-tags', authToken, showTags);
 router.get('/show-tag/:id', authToken, showTag);
+router.put('/update-tag/:id', authToken, globalValidator(updateTagSchema), updateTag);
+router.delete('/delete-tag/:id', authToken, deleteTag);
 export default router;
