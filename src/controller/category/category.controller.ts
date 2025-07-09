@@ -6,9 +6,11 @@ import createCategory from '../../service/impl/category/createCategory/createCat
 import showCategories from '../../service/impl/category/showCategories/showCategories.impl';
 import showCategory from '../../service/impl/category/showCategory/showCategory.impl';
 import updateCategory from '../../service/impl/category/updateCategory/updateCategory.impl';
+import deleteCategory from '../../service/impl/category/deleteCategory/deleteCategory.impl';
 const router = express.Router();
 router.post('/create-category', authToken, globalValidator(categorySchema), createCategory);
 router.get('/show-categories', authToken, showCategories);
 router.get('/show-category/:id', authToken, showCategory);
 router.put('/update-category/:id', authToken, globalValidator(updateCategorySchema), updateCategory);
+router.delete('/delete-category/:id', authToken, deleteCategory);
 export default router;
