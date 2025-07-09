@@ -11,6 +11,7 @@ import profileRoute from './controller/profile/profile.controller';
 import roleRoute from './controller/role/role.controller';
 import contentRoute from './controller/content/content.controller';
 import categoryRoute from './controller/category/category.controller';
+import tagRoute from './controller/tag/tag.controller';
 import notFoundRoute from './middleware/notFound/notFound';
 import backendServerErrorRoute from './middleware/serverError/serverError';
 const app: Application = express();
@@ -42,7 +43,7 @@ app.use(`/api/${API_VERSION}/profile`, profileRoute);
 app.use(`/api/${API_VERSION}/role`, roleRoute);
 app.use(`/api/${API_VERSION}/content`, contentRoute);
 app.use(`/api/${API_VERSION}/category`, categoryRoute);
-
+app.use(`/api/${API_VERSION}/tag`, tagRoute);
 app.use(notFoundRoute);
 app.use(backendServerErrorRoute);
 async function serve() {

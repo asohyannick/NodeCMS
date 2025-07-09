@@ -236,6 +236,42 @@ const updateCategorySchema = Yup.object().shape({
             }),
     }),
 });
+const tagSchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Tag name is required')
+        .min(2, 'Tag name must be at least 2 characters long'),
+    slug: Yup.string()
+        .required('Slug is required')
+        .matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be URL-friendly (lowercase letters, numbers, and hyphens)'),
+    description: Yup.string()
+        .optional(),
+    contentCount: Yup.number()
+        .required('Content count is required')
+        .min(0, 'Content count cannot be negative'),
+    createdBy: Yup.mixed<Types.ObjectId>()
+        .required('Creator ID is required')
+        .test('is-objectid', 'Created by must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+});
+const updateTagSchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Tag name is required')
+        .min(2, 'Tag name must be at least 2 characters long'),
+    slug: Yup.string()
+        .required('Slug is required')
+        .matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be URL-friendly (lowercase letters, numbers, and hyphens)'),
+    description: Yup.string()
+        .optional(),
+    contentCount: Yup.number()
+        .required('Content count is required')
+        .min(0, 'Content count cannot be negative'),
+    createdBy: Yup.mixed<Types.ObjectId>()
+        .required('Creator ID is required')
+        .test('is-objectid', 'Created by must be a valid ObjectId', value => {
+            return Types.ObjectId.isValid(value);
+        }),
+});
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -247,5 +283,7 @@ export {
     contentSchema,
     updateContentSchema,
     categorySchema,
-    updateCategorySchema
+    updateCategorySchema,
+    tagSchema,
+    updateTagSchema,
 }
