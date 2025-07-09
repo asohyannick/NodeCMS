@@ -6,9 +6,11 @@ import createQuestion from '../../service/impl/faq/createQuestion/createQuestion
 import showQuestions from '../../service/impl/faq/showQuestions/showQuestions.impl';
 import showQuestion from '../../service/impl/faq/showQuestion/showQuestion.impl';
 import updateQuestion from '../../service/impl/faq/updateQuestion/updateQuestion.impl';
+import deleteContent from '../../service/impl/content/deleteContent/deleteContent.impl';
 const router = express.Router();
 router.post('/create-question', authToken, globalValidator(faqSchema), createQuestion);
 router.get('/show-questions', authToken, showQuestions);
 router.get('/show-question/:id', authToken, showQuestion);
 router.put('/update-content-question/:id', authToken, globalValidator(updateFaqSchema), updateQuestion);
+router.delete('/delete-content-question/:id', authToken, deleteContent);
 export default router;
