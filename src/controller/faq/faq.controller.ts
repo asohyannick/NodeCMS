@@ -3,6 +3,8 @@ import authToken from '../../middleware/auth/auth.middleware';
 import globalValidator from '../../middleware/globalValidator/globalValidator';
 import { faqSchema } from '../../utils/validator';
 import createQuestion from '../../service/impl/faq/createQuestion/createQuestion.impl';
+import showQuestions from '../../service/impl/faq/showQuestions/showQuestions.impl';
 const router = express.Router();
 router.post('/create-question', authToken, globalValidator(faqSchema), createQuestion);
+router.get('/show-questions', authToken, showQuestions);
 export default router;
