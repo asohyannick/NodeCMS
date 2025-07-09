@@ -7,8 +7,10 @@ import showComments from '../../service/impl/comment/showComments/showComments.i
 import showComment from '../../service/impl/comment/showComment/showComment.impl';
 import updateComment from '../../service/impl/comment/updateComment/updateComment.impl';
 import deleteComment from '../../service/impl/comment/deleteComment/deleteComment.impl';
+import likeComment from '../../service/impl/comment/likeComment/likeComment.impl';
 const router = express.Router();
 router.post('/create-comment', authToken, globalValidator(commentSchema), createComment);
+router.post('/like-comment/:id', authToken, likeComment);
 router.get('/show-comments', authToken, showComments);
 router.get('/show-comment/:id', authToken, showComment);
 router.put('/update-content-comment/:id', authToken, globalValidator(updateCommentSchema), updateComment);
