@@ -3,6 +3,8 @@ import authToken from '../../middleware/auth/auth.middleware';
 import globalValidator from '../../middleware/globalValidator/globalValidator';
 import createComment from '../../service/impl/comment/createComment/createComment.impl';
 import { commentSchema } from '../../utils/validator';
+import showComments from '../../service/impl/comment/showComments/showComments.impl';
 const router = express.Router();
 router.post('/create-comment', authToken, globalValidator(commentSchema), createComment);
+router.get('/show-comments', authToken, showComments);
 export default router;
