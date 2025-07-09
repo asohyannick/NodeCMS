@@ -1,7 +1,7 @@
 {
   "name": "nodecontentmanagementsystem",
   "version": "1.0.0",
-  "description": "I'm building  a backend REST API for my CMS with Node.js, Express.js, TypeScript and MongoDB called NodeContentManagementSystem",
+  "description": "I'm building a backend REST API for my CMS with Node.js, Express.js, TypeScript and MongoDB called NodeCMS",
   "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon --exec tsx src/server.ts",
@@ -9,7 +9,7 @@
     "build": "npm install && tsc"
   },
   "keywords": [],
-  "author": "Asoh Yannick Anoh, A Full Stack TypeScript Developer",
+  "author": "Asoh Yannick Anoh, A Full Stack TypeScript Developer with great expertise in Node.js and React",
   "license": "ISC",
   "type": "module",
   "dependencies": {

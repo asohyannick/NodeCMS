@@ -457,6 +457,49 @@ const updateContactSchema = Yup.object().shape({
         .required('Response status is required'), // Required boolean field
 });
 
+const reviewSchema = Yup.object().shape({
+    contentId: Yup.mixed<Types.ObjectId>()
+        .required('Content ID is required')
+        .test('is-objectid', 'Content ID must be a valid ObjectId', value => {
+            return value instanceof Types.ObjectId || Types.ObjectId.isValid(value);
+        }),
+    author: Yup.mixed<Types.ObjectId>()
+        .required('Author ID is required')
+        .test('is-objectid', 'Author must be a valid ObjectId', value => {
+            return value instanceof Types.ObjectId || Types.ObjectId.isValid(value);
+        }),
+    rating: Yup.number()
+        .required('Rating is required')
+        .min(1, 'Rating must be at least 1')
+        .max(5, 'Rating must be at most 5'), // Ensure rating is between 1 and 5
+    comment: Yup.string()
+        .optional() // Comment is optional
+        .max(500, 'Comment must be at most 500 characters long'), // Limit comment length
+    isApproved: Yup.boolean()
+        .required('Approval status is required'), // Required boolean field
+});
+const updateReviewSchema = Yup.object().shape({
+    contentId: Yup.mixed<Types.ObjectId>()
+        .required('Content ID is required')
+        .test('is-objectid', 'Content ID must be a valid ObjectId', value => {
+            return value instanceof Types.ObjectId || Types.ObjectId.isValid(value);
+        }),
+    author: Yup.mixed<Types.ObjectId>()
+        .required('Author ID is required')
+        .test('is-objectid', 'Author must be a valid ObjectId', value => {
+            return value instanceof Types.ObjectId || Types.ObjectId.isValid(value);
+        }),
+    rating: Yup.number()
+        .required('Rating is required')
+        .min(1, 'Rating must be at least 1')
+        .max(5, 'Rating must be at most 5'), // Ensure rating is between 1 and 5
+    comment: Yup.string()
+        .optional() // Comment is optional
+        .max(500, 'Comment must be at most 500 characters long'), // Limit comment length
+    isApproved: Yup.boolean()
+        .required('Approval status is required'), // Required boolean field
+});
+
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -479,4 +522,6 @@ export {
     updateFaqSchema,
     contactSchema,
     updateContactSchema,
+    reviewSchema,
+    updateReviewSchema,
 }
