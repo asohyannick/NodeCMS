@@ -16,6 +16,7 @@ import mediaContentRoute from './controller/mediaContent/mediaContent.controller
 import commentRoute from './controller/comment/comment.controller';
 import questionRoute from './controller/faq/faq.controller';
 import reviewRoute from './controller/review/review.ocntroller';
+import suggestionRoute from './controller/suggestion/suggestion.controller';
 import notFoundRoute from './middleware/notFound/notFound';
 import backendServerErrorRoute from './middleware/serverError/serverError';
 const app: Application = express();
@@ -52,7 +53,7 @@ app.use(`/api/${API_VERSION}/media`, mediaContentRoute);
 app.use(`/api/${API_VERSION}/comment`, commentRoute);
 app.use(`/api/${API_VERSION}/question`, questionRoute);
 app.use(`/api/${API_VERSION}/review`, reviewRoute);
-
+app.use(`/api/${API_VERSION}/suggestion`, suggestionRoute);
 app.use(notFoundRoute);
 app.use(backendServerErrorRoute);
 async function serve() {

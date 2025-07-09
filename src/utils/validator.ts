@@ -500,6 +500,42 @@ const updateReviewSchema = Yup.object().shape({
         .required('Approval status is required'), // Required boolean field
 });
 
+const suggestionSchema = Yup.object().shape({
+    author: Yup.mixed<Types.ObjectId>()
+        .required('Author ID is required')
+        .test('is-objectid', 'Author must be a valid ObjectId', value => {
+            return value instanceof Types.ObjectId || Types.ObjectId.isValid(value);
+        }),
+    contentId: Yup.mixed<Types.ObjectId>()
+        .optional()
+        .test('is-objectid', 'Content ID must be a valid ObjectId', value => {
+            return value === undefined || value instanceof Types.ObjectId || Types.ObjectId.isValid(value);
+        }),
+    suggestion: Yup.string()
+        .required('Suggestion is required')
+        .min(1, 'Suggestion must be at least 1 character long')
+        .max(1000, 'Suggestion must be at most 1000 characters long'), // Limit suggestion length
+    isImplemented: Yup.boolean()
+        .required('Implementation status is required'), // Required boolean field
+});
+const updateSuggestionSchema = Yup.object().shape({
+    author: Yup.mixed<Types.ObjectId>()
+        .required('Author ID is required')
+        .test('is-objectid', 'Author must be a valid ObjectId', value => {
+            return value instanceof Types.ObjectId || Types.ObjectId.isValid(value);
+        }),
+    contentId: Yup.mixed<Types.ObjectId>()
+        .optional()
+        .test('is-objectid', 'Content ID must be a valid ObjectId', value => {
+            return value === undefined || value instanceof Types.ObjectId || Types.ObjectId.isValid(value);
+        }),
+    suggestion: Yup.string()
+        .required('Suggestion is required')
+        .min(1, 'Suggestion must be at least 1 character long')
+        .max(1000, 'Suggestion must be at most 1000 characters long'), // Limit suggestion length
+    isImplemented: Yup.boolean()
+        .required('Implementation status is required'), // Required boolean field
+});
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -524,4 +560,6 @@ export {
     updateContactSchema,
     reviewSchema,
     updateReviewSchema,
+    suggestionSchema,
+    updateSuggestionSchema,
 }
