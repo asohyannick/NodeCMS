@@ -6,10 +6,11 @@ import sendSuggestionMessage from '../../service/impl/suggestion/sendSuggestionM
 import showSuggestionMessages from '../../service/impl/suggestion/showSuggestionMessages/showSuggestionMessages.impl';
 import showSuggestionMessage from '../../service/impl/suggestion/showSuggestionMessage/showSuggestionMessage.impl';
 import updateSuggestionMessage from '../../service/impl/suggestion/updateSuggestionMessage/updateSuggestionMessage.impl';
+import deleteSuggestionMessage from '../../service/impl/suggestion/deleteSuggestionMessage/deleteSuggestionMessage.impl';
 const router = express.Router();
 router.post('/send-suggestion-message', authToken, globalValidator(suggestionSchema), sendSuggestionMessage);
 router.get('/show-suggestion-messages', authToken, showSuggestionMessages);
 router.get('/show-suggestion-message/:id', authToken, showSuggestionMessage);
 router.put('/update-suggestion-message/:id', authToken, globalValidator(updateSuggestionSchema), updateSuggestionMessage);
-
+router.delete('/delete-suggestion-message/:id', authToken, deleteSuggestionMessage);
 export default router;
