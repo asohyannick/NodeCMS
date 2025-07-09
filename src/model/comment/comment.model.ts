@@ -7,7 +7,6 @@ const commentSchema: Schema = new Schema<IComment>({
     CommentId: { type: Schema.Types.ObjectId, ref: 'Comment', default: null },
     replies: [{ type: Schema.Types.ObjectId, ref: 'Comment', default: [] }],
     likes: { type: Number, default: 0 },
-    unLikes: { type: Number, default: 0 },
     isDeleted: { type: Boolean, default: false },
 });
 

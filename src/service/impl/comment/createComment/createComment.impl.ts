@@ -5,13 +5,11 @@ const createComment = async (req: Request, res: Response): Promise<Response> => 
     const {
         body,
         likes,
-        unLikes,
     } = req.body;
     try {
         const newComment = new Comment({
             body,
             likes,
-            unLikes,
             isDeleted: true,
         });
         await newComment.save();

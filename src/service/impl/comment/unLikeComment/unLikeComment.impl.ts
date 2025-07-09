@@ -1,24 +1,22 @@
 import { Request, Response } from "express";
 import Comment from "../../../../model/comment/comment.model";
 import { StatusCodes } from "http-status-codes";
-const updateComment = async (req: Request, res: Response): Promise<Response> => {
+const unLikeComment = async(req: Request, res: Response): Promise<Response> => {
     try {
-        const {
-            body,
-            likes,
-        } = req.body;
         const { id } = req.params;
-        const comment = await Comment.findByIdAndUpdate(id, {
-            body,
-            likes,
-            Deleted: true,
-        }, { new: true, runValidators: true });
+        const comment = await Comment.findById(id);
         if (!comment) {
-            return res.status(StatusCodes.NOT_FOUND).json({ message: "Content comment doesn't exist!" });
+            return res.status(StatusCodes.NOT_FOUND).json({ message: "Content comment doesn't exist!"});
         }
+        // Decrement likes if likes is greater than 0
+        if (comment.likes > 0) {
+           comment.likes -= 1;
+           await comment.save();
+        }
+        await comment.save();
         return res.status(StatusCodes.OK).json({
             success: true,
-            message: "Content comment has been updated successfully!",
+            message: "Content comment has been unLiked successfully!",
             comment
         });
     } catch (error) {
@@ -31,4 +29,4 @@ const updateComment = async (req: Request, res: Response): Promise<Response> => 
     }
 }
 
-export default updateComment;
+export default unLikeComment;

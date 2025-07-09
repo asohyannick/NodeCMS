@@ -6,6 +6,5 @@ export interface IComment extends Document {
     replies: Types.ObjectId[]; // Array of replies to this comment
     body: string; // The text of the comment
     likes: number; // Number of likes the comment has received
-    unLikes: number; // Number of unlikes the comment has received
     isDeleted: boolean; // Soft delete flag
 }
