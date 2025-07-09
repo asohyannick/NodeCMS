@@ -14,6 +14,7 @@ import categoryRoute from './controller/category/category.controller';
 import tagContentRoute from './controller/tagContent/tagContent.controller';
 import mediaContentRoute from './controller/mediaContent/mediaContent.controller';
 import commentRoute from './controller/comment/comment.controller';
+import questionRoute from './controller/faq/faq.controller';
 import notFoundRoute from './middleware/notFound/notFound';
 import backendServerErrorRoute from './middleware/serverError/serverError';
 const app: Application = express();
@@ -48,6 +49,7 @@ app.use(`/api/${API_VERSION}/category`, categoryRoute);
 app.use(`/api/${API_VERSION}/tag`, tagContentRoute);
 app.use(`/api/${API_VERSION}/media`, mediaContentRoute);
 app.use(`/api/${API_VERSION}/comment`, commentRoute);
+app.use(`/api/${API_VERSION}/question`, questionRoute);
 
 app.use(notFoundRoute);
 app.use(backendServerErrorRoute);

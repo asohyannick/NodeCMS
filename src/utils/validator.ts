@@ -400,7 +400,30 @@ const updateCommentSchema = Yup.object().shape({
     isDeleted: Yup.boolean()
         .required('Deletion status is required'),
 });
-
+const faqSchema = Yup.object().shape({
+    question: Yup.string()
+        .required('Question is required')
+        .min(1, 'Question must be at least 1 character long'), // Ensure at least 1 character
+    answer: Yup.string()
+        .required('Answer is required')
+        .min(1, 'Answer must be at least 1 character long'), // Ensure at least 1 character
+    category: Yup.string()
+        .optional(), // Category is optional
+    isActive: Yup.boolean()
+        .required('Active status is required'),
+});
+const updateFaqSchema = Yup.object().shape({
+    question: Yup.string()
+        .required('Question is required')
+        .min(1, 'Question must be at least 1 character long'), // Ensure at least 1 character
+    answer: Yup.string()
+        .required('Answer is required')
+        .min(1, 'Answer must be at least 1 character long'), // Ensure at least 1 character
+    category: Yup.string()
+        .optional(), // Category is optional
+    isActive: Yup.boolean()
+        .required('Active status is required'),
+});
 export {
     userRegistrationSchema,
     userLoginSchema,
@@ -419,4 +442,6 @@ export {
     updateMediaSchema,
     commentSchema,
     updateCommentSchema,
+    faqSchema,
+    updateFaqSchema
 }
